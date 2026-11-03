@@ -58,3 +58,5 @@ slänger före export. Allt Audiveris läser men exporterar fel eller ofullstän
 | # | Commit | Vad | Mätt vinst | Uppströms-PR |
 |---|---|---|---|---|
 | 0 | dn/ | bygg- och rutinfiler, ingen kodändring | – | – |
+| 2 | `e5a62de` | `drumNotation` lämnar G-/F-/C-notraderna på samma ark orörda: standardnotrader får mallhuvudena som utan brytaren (`ShapeSet.getProcessedShapes(sheet, coll, drumStaff)`, `NoteHeadsBuilder.stdTemplateNotesAll`), och `BlackHeadSizer` mäter huvudstorleken ur standardnotradernas fläckar i stället för att hoppas över (`SpotsBuilder`) | se `slagverk/anteckningar/audiveris-patch-2.md` | ej skickad |
+| 1 | `a76e19a` | Exporten kraschade (NPE på `current.instrumentMap`) när trumstämmans första system börjar i G-klav och ett senare i slagverksklav; en logisk stämma är trumstämma så snart något systemparti är det, och notexporten tål en saknad karta (`PartwiseBuilder`) | se samma rapport | ej skickad |
