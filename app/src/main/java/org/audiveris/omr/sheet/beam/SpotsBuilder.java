@@ -234,31 +234,14 @@ public class SpotsBuilder
 
         List<Glyph> glyphs = GlyphFactory.buildGlyphs(spotTable, offset);
 
-        // Head sizing (cannot use spots located on drum staves)
+        // Head sizing.
+        // It is performed with or without drum notation, on the same population of spots, so that
+        // the pitched staves of a sheet are read exactly as without drum notation (the drum staves
+        // use their own motif templates anyway). It is still skipped for 1-line staves.
         final ProcessingSwitches switches = sheet.getStub().getProcessingSwitches();
         if (!switches.getValue(ProcessingSwitch.oneLineStaves)) {
-            if (!switches.getValue(ProcessingSwitch.drumNotation)) {
-                watch.start("computeHeadSizing");
-                new BlackHeadSizer(sheet).process(glyphs);
-            } else {
-                // Drum notation: size the black heads from the standard staves only,
-                // so that the pitched staves of a mixed sheet are read as without drum notation.
-                // (Staff headers, hence percussion clefs, are known since the HEADERS step)
-                watch.start("computeHeadSizing");
-                final List<Glyph> stdGlyphs = new ArrayList<>();
-
-                for (Glyph glyph : glyphs) {
-                    final Staff staff = sheet.getStaffManager().getClosestStaff(glyph.getCenter());
-
-                    if ((staff != null) && !staff.isDrum()) {
-                        stdGlyphs.add(glyph);
-                    }
-                }
-
-                if (!stdGlyphs.isEmpty()) {
-                    new BlackHeadSizer(sheet).process(stdGlyphs);
-                }
-            }
+            watch.start("computeHeadSizing");
+            new BlackHeadSizer(sheet).process(glyphs);
         }
 
         if (constants.printWatch.isSet()) {
