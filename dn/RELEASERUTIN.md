@@ -53,10 +53,17 @@ Forka bara för sådant Duly Noted **inte kan göra utifrån**: symboler Audiver
 slänger före export. Allt Audiveris läser men exporterar fel eller ofullständigt rättas i
 `omrnotes`/`heads`/`perc` i duly-noted – de lagren behöver ingen rebase, bara ommätning.
 
+## Fälla vid bygget
+
+Uppströms `collectJars` (packaging/build.gradle) kör bara när `packaging/build/jars` saknas, så ett andra bygge i samma
+träd packar den gamla jar:en. `dn/build-deb.sh` rensar `jars/` och `dist/` före varje bygge och vägrar om paketets jar
+inte är den nybyggda. Upptäckt 2026-11-03 när tre paket visade sig ha identisk jar.
+
 ## Patchserien just nu
 
 | # | Commit | Vad | Mätt vinst | Uppströms-PR |
 |---|---|---|---|---|
 | 0 | dn/ | bygg- och rutinfiler, ingen kodändring | – | – |
 | 2 | `e5a62de` | `drumNotation` lämnar G-/F-/C-notraderna på samma ark orörda: standardnotrader får mallhuvudena som utan brytaren (`ShapeSet.getProcessedShapes(sheet, coll, drumStaff)`, `NoteHeadsBuilder.stdTemplateNotesAll`), och `BlackHeadSizer` mäter huvudstorleken ur standardnotradernas fläckar i stället för att hoppas över (`SpotsBuilder`) | se `slagverk/anteckningar/audiveris-patch-2.md` | ej skickad |
+| 2b | `0ed1203` | Speltecknen (o, ø, +) blir `PlayingInter` bara för glyfer på slagverksrader (`InterFactory`); tidigare prövades de mot ackord på alla notrader när brytaren var på | se samma rapport | ej skickad |
 | 1 | `a76e19a` | Exporten kraschade (NPE på `current.instrumentMap`) när trumstämmans första system börjar i G-klav och ett senare i slagverksklav; en logisk stämma är trumstämma så snart något systemparti är det, och notexporten tål en saknad karta (`PartwiseBuilder`) | se samma rapport | ej skickad |
