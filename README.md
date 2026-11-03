@@ -17,8 +17,9 @@ egna commits, som rebasas på varje ny uppströmsrelease. Hur det går till stå
   ändras inte.
 - Duly Noteds `deploy/Dockerfile` hämtar i dag uppströms .deb från GitHub. Steget att låta den ta
   forkens .deb i stället görs i duly-noted, samordnat med den sessionen.
-- Repot synkas mellan datorerna med Syncthing som resten av `~/Projects`; `build` och `.gradle`
-  står i `.stignore`. Kör inte bygget på båda datorerna samtidigt.
+- Repot bor **bara på jobbdatorn**: `/audiveris-dn` står i `.stignore` på navet, hemma och jobb sedan
+  2026-11-03 (samordnarens beslut, HANDOFF 19.41) – 341 MB `.git` ska inte synkas. Patchar och siffror
+  går via `duly-noted-bankar/slagverk/anteckningar/`; sessionen körs i remoteläge från hemma.
 
 Beslutet (Erik 2026-11-03): forka som patchserie, mät varje ny uppströmsrelease mot forken, stryk
 patchar uppströms hunnit ikapp, skicka resten som pull requests.
