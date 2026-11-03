@@ -23,8 +23,9 @@ tabellen nedan. Krockar `dn/`-commiten löses alltid, den rör bara egna filer.
 | B | ren ny tagg, utan patchar |
 | C | ny tagg + rebasad serie (`dn-patches`) |
 
-`dn/build-deb.sh` på respektive utcheckning. B bygger man enklast genom att hämta uppströms
-färdiga .deb från GitHub-releasen.
+`dn/build-deb.sh` på respektive utcheckning (resultat i `dn/build/`), följt av `dn/smoke-test.sh`,
+som installerar paketet som duly-noteds Dockerfile gör och kör `Audiveris -version`. B bygger man
+enklast genom att hämta uppströms färdiga .deb från GitHub-releasen.
 
 ## 3. Mät alla tre i Duly Noteds testmiljö
 

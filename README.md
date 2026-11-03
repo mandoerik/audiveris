@@ -10,6 +10,9 @@ egna commits, som rebasas på varje ny uppströmsrelease. Hur det går till stå
 - `dn/build-deb.sh` bygger samma .deb som uppströms release (jlink + jpackage) i Docker med
   Temurin JDK 25 på Ubuntu 24.04. Prod-paketet byggs på x86_64 (VM 103 eller one); Mac-bygget är
   kompileringskontroll.
+- `dn/smoke-test.sh` installerar en byggd .deb i en ren Ubuntu 24.04-container på samma sätt som
+  duly-noteds Dockerfile (samma bibliotek, `dpkg-deb -x`) och kör `Audiveris -version`. Provbygge
+  + röktest på jobbdatorn (arm64) gick igenom 2026-11-03: Java 25.0.5, Tesseract 5.5.2.
 - `dn/VERSION` = forkens suffix (`dn1`, `dn2` …), hamnar i .deb-filnamnet. Audiveris egen version
   ändras inte.
 - Duly Noteds `deploy/Dockerfile` hämtar i dag uppströms .deb från GitHub. Steget att låta den ta
