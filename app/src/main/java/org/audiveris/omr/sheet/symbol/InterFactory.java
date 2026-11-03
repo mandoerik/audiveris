@@ -550,10 +550,21 @@ public class InterFactory
             // Playings
             case PLAYING_OPEN:
             case PLAYING_HALF_OPEN:
-            case PLAYING_CLOSED:
-                // Check potential link with proper drum note
-                return switches.getValue(ProcessingSwitch.drumNotation) ? PlayingInter
-                        .createValidAdded(glyph, shape, grade, system, systemHeadChords) : null;
+            case PLAYING_CLOSED: {
+                // Check potential link with proper drum note, on a drum staff only
+                // (so that the drumNotation switch leaves the standard staves unchanged)
+                if (!switches.getValue(ProcessingSwitch.drumNotation)) {
+                    return null;
+                }
+
+                final Staff staff = system.getClosestStaff(glyph.getCenter());
+
+                if ((staff == null) || !staff.isDrum()) {
+                    return null;
+                }
+
+                return PlayingInter.createValidAdded(glyph, shape, grade, system, systemHeadChords);
+            }
 
             // Others
             default:
