@@ -13,6 +13,9 @@ SUFFIX=$(cat dn/VERSION)                                                   # t.e
 IMAGE=eclipse-temurin:25-jdk-noble
 PLAT=${PLATFORM:-}
 mkdir -p dn/build
+# Uppströms collectJars kör bara om packaging/build/jars saknas (onlyIf) – ett andra bygge i samma träd packar annars
+# den gamla jar:en. Bort med jars/ och dist/ varje gång; custom-jre/ får vara kvar (bara JRE:n).
+rm -rf packaging/build/jars packaging/build/dist
 echo "== bygger $TAG ($SUFFIX) i $IMAGE ${PLAT:+platform=$PLAT}"
 docker run --rm ${PLAT:+--platform "$PLAT"} \
   -v "$PWD":/src -w /src \
@@ -31,3 +34,5 @@ for f in dn/build/Audiveris-*.deb; do
   mv "$f" "dn/build/Audiveris-5.11.0-$SUFFIX-${TAG}-ubuntu24.04-${ARCH}.deb"
 done
 ls -la dn/build/
+# kontroll: jar:en i paketet = app/build/jar/audiveris.jar
+cmp -s packaging/build/jars/audiveris.jar app/build/jar/audiveris.jar && echo "jar i paketet = nybyggd" || { echo "FEL: paketets jar är inte den nybyggda"; exit 1; }
