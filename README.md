@@ -1,21 +1,22 @@
-> **English:** this is [Duly Noted](https://dulynoted.se)'s fork of [Audiveris](https://github.com/Audiveris/audiveris) (AGPL v3),
-> kept as a short patch series on branch `dn-patches` on top of the upstream tag `5.11.0`. The patches make the `drumNotation`
-> switch leave the pitched staves of a mixed sheet unchanged and fix a MusicXML export crash for drum parts that start in a G clef;
-> see the commits and `dn/RELEASERUTIN.md`. The rest of this file is in Swedish. Upstream README: [README.upstream.md](README.upstream.md).
+# Audiveris – Duly Noted patch series
 
-# audiveris-dn – Duly Noteds patchserie på Audiveris
+Fork of [Audiveris](https://github.com/Audiveris/audiveris) (AGPL-3.0) used by [Duly Noted](https://dulynoted.se).
+Branch `dn-patches` is the upstream tag `5.11.0` plus a few commits (`git log 5.11.0..dn-patches`), rebased on
+each upstream release. Upstream README: [README.upstream.md](README.upstream.md).
 
-Fork av [Audiveris](https://github.com/Audiveris/audiveris) (AGPL v3) för bättre trumigenkänning i
-[Duly Noted](https://dulynoted.se). Inte en egen kodbas: grenen `dn-patches` är uppströms tagg `5.11.0` plus en
-kort serie egna commits, som rebasas på varje ny uppströmsrelease. Hur det går till står i
-[`dn/RELEASERUTIN.md`](dn/RELEASERUTIN.md).
+**Patches**
 
-- `upstream` = github.com/Audiveris/audiveris (bara hämtning). `origin` = github.com/mandoerik/audiveris, publik
-  sedan 2026-11-04 (AGPL kräver att ändrad källkod kan lämnas ut); taggar `5.11.0-dnN` + GitHub-releaser med .deb.
-- `dn/build-deb.sh` bygger samma .deb som uppströms release (jlink + jpackage) i Docker med Temurin JDK 25 på
-  Ubuntu 24.04.
-- `dn/smoke-test.sh` installerar en byggd .deb i en ren Ubuntu 24.04-container (`dpkg-deb -x` plus körtidsbiblioteken)
-  och kör `Audiveris -version`.
-- `dn/VERSION` = forkens suffix (`dn1`, `dn2` …), hamnar i .deb-filnamnet. Audiveris egen version ändras inte.
+- `drumNotation` leaves the pitched (G/F/C clef) staves of a sheet unchanged: standard staves get the same head
+  templates, playing-sign handling and head sizing as without the switch (`ShapeSet`, `NoteHeadsBuilder`,
+  `SpotsBuilder`, `InterFactory`).
+- No `NullPointerException` in the MusicXML export when a drum part starts in a G clef and switches to the
+  percussion clef later (`PartwiseBuilder`).
 
-Uppströms README: [README.upstream.md](README.upstream.md).
+**Build**
+
+`dn/build-deb.sh` builds the same `.deb` as the upstream release (jlink + jpackage) in Docker with Temurin JDK 25
+on Ubuntu 24.04; `PLATFORM=linux/amd64` builds for x86_64 on another host. `dn/smoke-test.sh` installs a built
+`.deb` in a clean container and runs `Audiveris -version`. Releases carry the `.deb` and its SHA-256.
+
+Note: upstream's `collectJars` and `customJre` tasks run only when `packaging/build/jars` and
+`packaging/build/custom-jre` are missing, so the script removes them before every build.

@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
-# Röktest av en byggd .deb på samma sätt som duly-noted/deploy/Dockerfile använder den:
-# Ubuntu 24.04, samma runtime-bibliotek, dpkg-deb -x (postinst kraschar i container), sedan
-# `Audiveris -version`. Argument: sökväg till .deb (standard: nyaste i dn/build/).
+# Smoke test of a built .deb in a clean Ubuntu 24.04 container: runtime libraries, dpkg-deb -x
+# (the postinst needs a desktop), then `Audiveris -version`. Argument: path to the .deb (default: newest in dn/build/).
 set -euo pipefail
 cd "$(dirname "$0")/.."
 DEB=${1:-$(ls -t dn/build/Audiveris-*.deb | head -1)}
-echo "== röktest $DEB"
+echo "== smoke test $DEB"
 docker run --rm -v "$PWD/$DEB":/pkg/audiveris.deb:ro ubuntu:24.04 bash -c '
   set -e
   apt-get update -qq >/dev/null
