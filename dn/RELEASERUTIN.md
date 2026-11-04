@@ -47,6 +47,14 @@ Varje patch som kan skrivas allmänt (inte DN-specifik) läggs som pull request 
 `Audiveris/audiveris`. Mergad uppströms → lämnar serien av sig själv vid nästa release.
 Patchar som förblir privata är en återkommande rebasekostnad.
 
+## Publicering (AGPL)
+
+Forken är publik på **https://github.com/mandoerik/audiveris** (remote `origin`; `upstream` = Audiveris/audiveris). Varje version
+som ska köras i prod: tagga toppen av `dn-patches` med `5.11.0-dnN` (N ur `dn/VERSION`), pusha gren + tagg, bygg x86_64-.deb:en ur
+taggen (`dn/build-deb.sh`, på x86_64-värd eller `PLATFORM=linux/amd64`) och lägg den med sha256 på en GitHub-release
+(`gh release create 5.11.0-dnN dn/build/*.deb`). Det som kör i prod ska alltid finnas som tagg + release. Första: `5.11.0-dn1`
+(2026-11-04). Erik läser commitarna på https://github.com/mandoerik/audiveris/commits/dn-patches.
+
 ## Regel för vad som får bli en patch
 
 Forka bara för sådant Duly Noted **inte kan göra utifrån**: symboler Audiveris inte ser alls eller

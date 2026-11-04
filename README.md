@@ -10,8 +10,8 @@ Duly Noted. **Inte en egen kodbas:** grenen `dn-patches` är uppströms tagg `5.
 egna commits, som rebasas på varje ny uppströmsrelease. Hur det går till står i
 [`dn/RELEASERUTIN.md`](dn/RELEASERUTIN.md).
 
-- `upstream` = github.com/Audiveris/audiveris (bara hämtning). Ingen egen GitHub-remote än; när
-  forken körs i prod ska den publiceras (AGPL kräver att ändrad källkod kan lämnas ut).
+- `upstream` = github.com/Audiveris/audiveris (bara hämtning). `origin` = **github.com/mandoerik/audiveris**, publik
+  sedan 2026-11-04 (AGPL kräver att ändrad källkod kan lämnas ut); taggar `5.11.0-dnN` + GitHub-releaser med .deb.
 - `dn/build-deb.sh` bygger samma .deb som uppströms release (jlink + jpackage) i Docker med
   Temurin JDK 25 på Ubuntu 24.04. Prod-paketet byggs på x86_64 (VM 103 eller one); Mac-bygget är
   kompileringskontroll.
