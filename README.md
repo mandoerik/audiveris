@@ -1,3 +1,8 @@
+> **English:** this is [Duly Noted](https://dulynoted.se)'s fork of [Audiveris](https://github.com/Audiveris/audiveris) (AGPL v3),
+> kept as a short patch series on branch `dn-patches` on top of the upstream tag `5.11.0`. The patches make the `drumNotation`
+> switch leave the pitched staves of a mixed sheet unchanged and fix a MusicXML export crash for drum parts that start in a G clef;
+> see the commits and `dn/RELEASERUTIN.md`. The rest of this file is in Swedish. Upstream README: [README.upstream.md](README.upstream.md).
+
 # audiveris-dn – Duly Noteds patchserie på Audiveris
 
 Fork av [Audiveris](https://github.com/Audiveris/audiveris) (AGPL v3) för bättre trumigenkänning i
